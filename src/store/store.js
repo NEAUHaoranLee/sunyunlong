@@ -13,9 +13,9 @@ const instance = axios.create({
 axios.defaults.withCredentials = true; //让ajax携带cookie
 
 const initState = {
-  userType: 'manager',
+  userType: 'student',
   userName: '',
-  userAccount: 'admin',
+  userAccount: 'A19150292',
   loading: false,
   applyType: [],
   //管理员
