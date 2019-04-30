@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="A2" transform="translate(-572.000000, -256.000000)" fill="#DA3B00">
+            <g id="card" transform="translate(196.000000, 129.000000)">
+                <g id="Group-13" transform="translate(0.000000, 44.000000)">
+                    <g id="Group-16" transform="translate(185.000000, 40.000000)">
+                        <g id="发单量">
+                            <g id="Group-11-Copy" transform="translate(98.000000, 16.000000)">
+                                <path d="M98.3841106,27.4609328 L102.31659,32.1799078 C102.493372,32.3920462 102.46471,32.7073286 102.252571,32.8841106 C102.162714,32.9589919 102.049447,33 101.932479,33 L94.0675208,33 C93.7913784,33 93.5675208,32.7761424 93.5675208,32.5 C93.5675208,32.3830317 93.6085289,32.2697653 93.6834102,32.1799078 L97.6158894,27.4609328 C97.7926714,27.2487943 98.1079538,27.2201323 98.3200922,27.3969143 C98.3433237,27.4162739 98.364751,27.4377012 98.3841106,27.4609328 Z" id="Rectangle-6" transform="translate(98.000000, 30.000000) scale(1, -1) translate(-98.000000, -30.000000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

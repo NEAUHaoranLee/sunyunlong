@@ -1,0 +1,105 @@
+html {
+  margin: 0;
+  padding: 0;
+
+  .loading-spin {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Avenir, wf_SegoeUI, Segoe UI, Segoe, Segoe WP, Tahoma, Verdana,
+      Arial, sans-serif;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+
+    #app-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #f1f3f6;
+
+      .page-container {
+        height: 100%;
+        width: 100%;
+        margin-top: -86px;
+        padding-top: 86px;
+        padding-left: 180px;
+        overflow: auto;
+      }
+
+      .app-body {
+        transition: all 0.1s linear;
+        height: 100%;
+
+        .app-header {
+          height: 86px;
+          width: 100%;
+          position: relative;
+          z-index: 10;
+          background: #ffffff;
+          box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          padding: 0 8px;
+
+          img {
+            height: 50px;
+          }
+
+          .img-container {
+            margin-left: 6px;
+            width: 51px;
+            overflow: hidden;
+          }
+
+          .img-content {
+            font-size: 24px;
+            font-weight: bolder;
+            padding-left: 6px;
+          }
+
+          .header-user-info {
+            position: absolute;
+            right: 30px;
+
+            .username {
+              margin-right: 6px;
+              font-size: 14px
+            }
+          }
+        }
+      }
+
+      .nav {
+        position: fixed;
+        z-index: 999;
+        top: 86px;
+        left: 0;
+        bottom: 0;
+      }
+
+      // .nav-out {
+      //   /*width: calc(~"100% - 180px");*/
+      //   height: 100%;
+      //   margin-left: 180px;
+      // }
+
+      // .nav-in {
+      //   /*width: calc(~"100% - 48px");*/
+      //   height: 100%;
+      //   margin-left: 48px;
+      // }
+
+      .nav-none {
+        height: 100%;
+        margin-left: 0;
+      }
+    }
+  }
+}
