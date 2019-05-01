@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Spin } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { actions } from 'store/store';
@@ -58,7 +59,7 @@ class App extends PureComponent {
               <div className="img-container">
                 <img src={logo} alt="" />
               </div>
-              <span className='img-content'>东北农业大学奖学金评分系统</span>
+              <span className="img-content">东北农业大学奖学金评分系统</span>
               <div className="header-user-info">
                 {/* <div className="username">
                   {`孙云龙`}
@@ -81,7 +82,7 @@ class App extends PureComponent {
                   userType={userType}
                 />
               )}
-              {this.props.children}
+              <Spin spinning={this.props.loading}>{this.props.children}</Spin>
             </div>
           }
         </div>

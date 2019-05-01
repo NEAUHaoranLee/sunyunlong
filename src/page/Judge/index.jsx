@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { message, Button, Icon, Divider, Tabs } from 'antd';
+import { message, Button, Icon, Divider, Tabs, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'store/store';
@@ -12,80 +12,121 @@ class Judge extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isApproval: [],
-      notApproval: [],
+      activeKey: '01',
     };
   }
   componentDidMount() {
-    this.props.getJudgeData({
-      account: this.props.userAccount,
-    });
+    this.props.getApplyType();
+    this.props.getManagerRelease({ type: this.state.activeKey });
   }
-  componentWillReceiveProps(newProps) {
-    if (this.props.judgeData !== newProps.judgeData) {
-      this.setState({
-        isApproval: newProps.judgeData.isApproval,
-        notApproval: newProps.judgeData.notApproval,
-      });
-    }
-  }
-  updateData = (value, index) => {
-    let newNotApproval = [...this.state.notApproval];
-    let newIsApproval = [...this.state.isApproval];
-    newNotApproval[index].data = this.state.notApproval[index].data.filter(
-      (item) => item.key !== value.key,
-    );
-    newIsApproval[index].data.push(value);
-
+  getCloumn = () => {
+    return [
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        key: 'name',
+        fixed: 'left',
+        width: 250,
+      },
+      {
+        title: '学号',
+        dataIndex: 'studentId',
+        key: 'studentId',
+        width: 150,
+      },
+      {
+        title: '时间',
+        dataIndex: 'time',
+        key: 'time',
+        width: 200,
+        // filters: collage.map((item) => {
+        //   return {
+        //     text: item,
+        //     value: item,
+        //   };
+        // }),
+        // onFilter: (value, record) => record.collage === value,
+      },
+      {
+        title: '类型',
+        dataIndex: 'type',
+        key: 'type',
+      },
+      {
+        title: '查看详情',
+        dataIndex: 'detail',
+        key: 'detail',
+        width: 100,
+        render: (text, record) => {
+          return <Link to={`/teacher/detail/${record.key}`}>查看详情</Link>;
+        },
+      },
+      {
+        title: '审批',
+        dataIndex: 'approve',
+        key: 'approve',
+        fixed: 'right',
+        width: 110,
+        render: (text, record) => {
+          return (
+            <div>
+              <a
+                href="javascript:;"
+                onClick={() => this.showModal(record, '审批', 'teacherApprove')}
+              >
+                审批
+              </a>
+              <Divider type="vertical" />
+              <a
+                href="javascript:;"
+                onClick={() =>
+                  this.showModal(record, '驳回', 'teacherNotApprove')
+                }
+              >
+                驳回
+              </a>
+            </div>
+          );
+        },
+      },
+    ];
+  };
+  activeKeyChange = (key) => {
     this.setState(
       {
-        isApproval: newIsApproval,
-        notApproval: newNotApproval,
+        activeKey: key,
       },
-      (state) => {
-        console.log(this.state.notApproval);
+      () => {
+        this.props.getManagerRelease({ type: key });
       },
     );
   };
-  render() {
-    console.log(this.state);
-    return (
-      <div className="manager-container">
-        <div className="content-container">
-          <Tabs>
-            <TabPane tab="待审批" key={1}>
-              {this.state.notApproval.map((item, index) => (
-                <ProBoard
-                  title={item.title}
-                  type="judging"
-                  key={index}
-                  data={item.data}
-                  updateData={(value) => {
-                    this.updateData(value, index);
-                  }}
-                />
-              ))}
+  aHandleClick = (name) => {
+    const { mRelease } = this.props;
 
-              {/* <ProBoard title="2018结题" type="judging" /> */}
-            </TabPane>
-            <TabPane tab="已审批" key={2}>
-              {this.state.isApproval.map((item, index) => (
-                <ProBoard
-                  {...this.props}
-                  title={item.title}
-                  type="judged"
-                  key={index}
-                  data={item.data}
-                  canSubmit={this.state.notApproval[index].data.length === 0}
-                  updateData={(value) => {
-                    this.updateData(value, index);
-                  }}
-                />
-              ))}
-              {/* <ProBoard title="2019中期检查" type="judged" />
-              <ProBoard title="2018结题" type="judged" /> */}
-            </TabPane>
+    this.props[name]({
+      key: mRelease.isApprove[0].key || mRelease.notApprove[0].key,
+    }).then((res) => message.success(res.data.date));
+  };
+  render() {
+    const { mRelease, applyType } = this.props;
+
+    return (
+      <div className="judge-container">
+        <div className="content-container">
+          <Tabs
+            activeKey={this.state.activeKey}
+            onChange={this.activeKeyChange}
+          >
+            {applyType.map((item, index) => {
+              return <Tabs.TabPane tab={item} key={`0${index + 1}`} />;
+            })}
           </Tabs>
+          <Table
+            dataSource={[]}
+            columns={this.getCloumn()}
+            // scroll={{ x: 1200 }}
+          />
         </div>
       </div>
     );

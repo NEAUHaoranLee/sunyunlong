@@ -6,42 +6,55 @@
   position: relative;
 
   .content-container {
+    padding: 26px;
     width: 1000px;
-    // height: 400px;
+    height: 400px;
+    background: #ffffff;
     margin: 24px auto;
+    border: #999 1px solid;
+    border-radius: 50px;
     // position: absolute;
     // top: 50%;
     // left: 50%;
     // transform: translate(-50%, -50%);
 
-    .manage-title {
-      height: 46px;
-      margin-bottom: 16px;
-      background: #ffffff;
-      line-height: 46px;
-      font-size: 16px;
-      box-shadow: 0 0px 4px 0px rgba(0, 0, 0, 0.1);
-      padding: 0 16px;
+    .approval-container {
+      margin-top: 40px;
 
-      .title-child {
-        padding: 0 16px;
-      }
-    }
+      .isApprove,
+      .notApprove {
+        line-height: 60px;
+        padding-left: 24px;
+        height: 60px;
+        width: 600px;
+        border: #999 1px solid;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        position: relative;
+        font-size: 14px;
+        
+        .number {
+          position: absolute;
+          right: 85px;
+          font-size: 20px;
+          font-weight: bold;
+        }
 
-    .new-year {
-      margin-top: 20px;
-      position: relative;
-
-      .new {
-
-        position: absolute;
-        top: 0;
-        left: 85px;
+        a {
+          float: right;
+          display: block;
+          height: 59px;
+          width: 60px;
+        border-left: #999 1px solid;
+        line-height: 59px;
         text-align: center;
+          
+        }
       }
     }
   }
 }
+
 
 .viewPro-container {
   .ant-pagination {

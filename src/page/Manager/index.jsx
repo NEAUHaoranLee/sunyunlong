@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Upload, message, Button, Icon, Divider } from 'antd';
+import { Tabs, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'store/store';
@@ -9,49 +9,84 @@ import './index.less';
 class Menager extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      activeKey: '01',
+    };
   }
   componentDidMount() {
+    this.props.getApplyType();
+    this.props.getManagerRelease({ type: this.state.activeKey });
     this.init();
   }
   init = () => {
-    const { userAccount, getManagerProcess } = this.props;
+    // const { userAccount, getManagerProcess } = this.props;
+    // getManagerProcess({ account: userAccount });
+  };
+  activeKeyChange = (key) => {
+    this.setState(
+      {
+        activeKey: key,
+      },
+      () => {
+        this.props.getManagerRelease({ type: key });
+      },
+    );
+  };
+  aHandleClick = (name) => {
+    const { mRelease } = this.props;
 
-    getManagerProcess({ account: userAccount });
+    this.props[name]({
+      key: mRelease.isApprove[0].key || mRelease.notApprove[0].key,
+    }).then((res) => message.success(res.data.date));
   };
   render() {
-    const { mProcess, stopCollect, getManagerProcess } = this.props;
+    const { mRelease, applyType } = this.props;
 
     return (
       <div className="manager-container">
         <div className="content-container">
-          {mProcess &&
-            mProcess.map((item, index) => {
-              console.log(333, item)
-              return (
-                <div key={index}>
-                  <div className="manage-title">
-                    <span className="title-child">
-                      当前流程: <span>{item.currentProcess}</span>
-                    </span>
-                    <Divider type="vertical" />
-                    <span className="title-child">管理等级：{item.level}</span>
-                    <Divider type="vertical" />
-                    <span className="title-child">当前状态：{item.state}</span>
-                  </div>
-                  <ProBoard
-                    stopCollect={stopCollect}
-                    init={this.init}
-                    pKey={item.key}
-                    title={item.currentProcess}
-                    level={item.level}
-                    state={item.state}
-                    userAccount={this.props.userAccount}
-                    submitFinalResult={this.props.submitFinalResult}
-                    data={item.managerDtoList[item.currentProcess]}
-                  />
-                </div>
-              )
+          <Tabs
+            activeKey={this.state.activeKey}
+            onChange={this.activeKeyChange}
+          >
+            {applyType.map((item, index) => {
+              return <Tabs.TabPane tab={item} key={`0${index + 1}`} />;
             })}
+          </Tabs>
+          <div className="approval-container">
+            <div className="isApprove">
+              <span>已审批</span>
+              <span className="number">
+                {(mRelease.isApprove || []).length}
+              </span>
+              <a
+                href="javascript:;"
+                onClick={() => {
+                  if (mRelease.isApprove.length !== mRelease.sum)
+                    return message.warning('审批未完成，无法发布');
+                  this.aHandleClick('managerSubmission');
+                }}
+              >
+                发布
+              </a>
+            </div>
+            <div className="notApprove">
+              <span>未审批</span>
+              <span className="number">
+                {(mRelease.notApprove || []).length}
+              </span>
+              <a
+                href="javascript:;"
+                onClick={() => {
+                  if (mRelease.notApprove.length === 0)
+                    return message.warning('全部已审批');
+                  this.aHandleClick('managerRemind');
+                }}
+              >
+                提醒
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );

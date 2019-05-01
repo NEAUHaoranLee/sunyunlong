@@ -13,25 +13,24 @@ const instance = axios.create({
 axios.defaults.withCredentials = true; //让ajax携带cookie
 
 const initState = {
-  userType: 'student',
+  userType: 'judge',
   userName: '',
-  userAccount: 'A19150292',
+  userAccount: 'A19151111',
   loading: false,
   applyType: [],
   //管理员
-  mProcess: [],
-  // mProcessTable: [], //首页
-  processManageData: [], //流程管理
-  processDetailsData: [], //详情
+  mRelease: {},
   //学生
   sApply: [],
   sScore: [],
   editData: {},
   //评审
-  judgeData: {},
+  judgeData: [],
+  jIsApproveList: [],
   //老师
-  tApproveList: [],
-  tProjectList: [],
+  tApplyList: [],
+  tDetail: {},
+  tStudentInf: [],
 }
 
 const TYPE = {
@@ -152,96 +151,125 @@ export const actions = {
     })
   },
   //管理员
-  getManagerProcess: (params) => (dispatch) => {
-    instance.post('/manager/currentProcess', params).then((res) => {
-      if (res.data.code !== 200 || res.data.data === 'null') return;
-
-      dispatch(
-        actions.updateProps({
-          mProcess: res.data.data.unifiedTable,
-          mProcessTable: p.managerProDataFormatter(res.data.data),
-        })
-      );
-    })
-  },
-  processManage: (params) => (dispatch) => {
-    instance.post('/manager/overview', params).then((res) => {
+  getManagerRelease: (params) => (dispatch) => {
+    instance.post('/admin/release', params).then((res) => {
       if (res.data.code !== 200) return;
 
       dispatch(
         actions.updateProps({
-          processManageData: res.data.data
+          mRelease: p.managerFormatter(res.data.date),
         })
       );
     })
   },
-  processDetails: (params) => (dispatch) => {
-    instance.post('/manager/details', params).then((res) => {
-      if (res.data.code !== 200) return;
+  managerSubmission: (params) => (dispatch) => {
+    dispatch(
+      actions.updateProps({
+        loading: true,
+      })
+    );
 
+    return instance.post('/admin/submission', params).then((res) => {
       dispatch(
         actions.updateProps({
-          processDetailsData: res.data.data
+          loading: false,
         })
       );
-    })
+
+      return res;
+    });
   },
-  newProcess: (params) => (dispatch) => {
-    return instance.post('/manager/newAndEditProcess', params);
-  },
-  stopCollect: (params) => (dispatch) => {
-    return instance.post('/manager/stop', params);
-  },
-  submitFinalResult: (params) => (dispatch) => {
-    return instance.post('/manager/apply', params);
+  managerRemind: (params) => (dispatch) => {
+    dispatch(
+      actions.updateProps({
+        loading: true,
+      })
+    );
+
+    return instance.post('/admin/remind', params).then((res) => {
+      dispatch(
+        actions.updateProps({
+          loading: false,
+        })
+      );
+
+      return res;
+    });
   },
   //评委
   getJudgeData: (params) => (dispatch) => {
-    instance.post('/judge/view', params).then((res) => {
+    instance.post('/judges/approvalFind', params).then((res) => {
       if (res.data.code !== 200) return;
 
       dispatch(
         actions.updateProps({
-          judgeData: res.data.data,
+          judgeData: res.data.date,
         })
       );
     })
   },
-  submitJudges: (params) => (dispatch) => {
-    return instance.post('/judge/apply', params).then((res) => {
+  judgeApprove: (params) => (dispatch) => {
+    return instance.post('/judges/approval', params).then((res) => {
       if (res.data.code !== 200) return;
     })
   },
-  saveJudges: (params) => (dispatch) => {
-    instance.post('/judge/save', params).then((res) => {
+  judgeNotApprove: (params) => (dispatch) => {
+    instance.post('/judges/notApproval', params).then((res) => {
       if (res.data.code !== 200) return;
+    })
+  },
+  judgeIsApproveList: (params) => (dispatch) => {
+    instance.post('/judges/myApproval').then((res) => {
+      if (res.data.code !== 200) return;
+
+      dispatch(
+        actions.updateProps({
+          jIsApproveList: res.data.date,
+        })
+      );
     })
   },
   //老师
-  teacherApproveList: (params) => (dispatch) => {
-    instance.post('/teacher/pApproval', params).then((res) => {
+  teacherApplyList: (params) => (dispatch) => {
+    instance.post('/teacher/applyManager', params).then((res) => {
       if (res.data.code !== 200) return;
 
       dispatch(
         actions.updateProps({
-          tApproveList: res.data.data === 'null' ? [] : res.data.data,
+          tApplyList: res.data.date,
         })
       );
     })
   },
-  teacherProjectList: (params) => (dispatch) => {
-    instance.post('/teacher/myProject', params).then((res) => {
+  teacherApplyDetail: (params) => (dispatch) => {
+    instance.post('/teacher/details', params).then((res) => {
       if (res.data.code !== 200) return;
 
       dispatch(
         actions.updateProps({
-          tProjectList: res.data.data === 'null' ? [] : res.data.data,
+          tDetail: res.data.date,
+        })
+      );
+    })
+  },
+  teacherStdInfo: (params) => (dispatch) => {
+    instance.post('/teacher/findInf', params).then((res) => {
+      if (res.data.code !== 200) return;
+
+      dispatch(
+        actions.updateProps({
+          tStudentInf: res.data.date,
         })
       );
     })
   },
   teacherApprove: (params) => (dispatch) => {
-    return instance.post('/teacher/approve', params).then((res) => {
+    return instance.post('/teacher/approval', params).then((res) => {
+      if (res.data.code === 200) return true;
+    })
+  },
+  teacherNotApprove: (params) => (dispatch) => {
+    return instance.post('/teacher/notApproval', params).then((res) => {
       if (res.data.code === 200) return true;
     })
   },
