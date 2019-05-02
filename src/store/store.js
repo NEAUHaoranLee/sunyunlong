@@ -13,9 +13,9 @@ const instance = axios.create({
 axios.defaults.withCredentials = true; //让ajax携带cookie
 
 const initState = {
-  userType: 'judge',
+  userType: '',
   userName: '',
-  userAccount: 'A19151111',
+  userAccount: '',
   loading: false,
   applyType: [],
   //管理员
@@ -57,15 +57,15 @@ export const actions = {
     return instance.get('/checkLogin').then(({
       data: {
         code,
-        data
+        date
       }
     }) => {
       if (code === 200) {
         dispatch(
           actions.updateProps({
-            userType: data.userType,
-            userName: data.userName,
-            userAccount: data.account,
+            userType: date.userType,
+            userName: date.userName,
+            userAccount: date.account,
           })
         )
         return false;
@@ -80,19 +80,21 @@ export const actions = {
     instance.post('/login', params).then(({
       data: {
         code,
-        data
+        date
       }
     }) => {
       if (code === 200) {
+        dispatch(actions.loadingControl(false))
+
         dispatch(
           actions.updateProps({
-            userType: data.userType,
-            userName: data.userName,
+            userType: date.userType,
+            userName: date.userName,
             userAccount: params.account
           })
         )
       } else if (code === 205) {
-        message.error(data)
+        message.error(date)
       }
     })
   },
@@ -163,19 +165,10 @@ export const actions = {
     })
   },
   managerSubmission: (params) => (dispatch) => {
-    dispatch(
-      actions.updateProps({
-        loading: true,
-      })
-    );
+    dispatch(actions.loadingControl(true))
 
     return instance.post('/admin/submission', params).then((res) => {
-      dispatch(
-        actions.updateProps({
-          loading: false,
-        })
-      );
-
+      dispatch(actions.loadingControl(false))
       return res;
     });
   },
@@ -219,7 +212,7 @@ export const actions = {
     })
   },
   judgeIsApproveList: (params) => (dispatch) => {
-    instance.post('/judges/myApproval').then((res) => {
+    instance.post('/judges/myApproval', params).then((res) => {
       if (res.data.code !== 200) return;
 
       dispatch(

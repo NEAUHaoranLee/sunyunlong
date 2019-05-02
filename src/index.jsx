@@ -15,6 +15,7 @@ import Detail from 'page/teacher/Detail';
 import Manager from 'page/Manager/index';
 import Student from 'page/Student/index';
 import Judge from 'page/Judge/index';
+import IsApprove from 'page/Judge/isApprove';
 import Apply from 'page/Student/Apply';
 import Score from 'page/Student/score.jsx';
 // import ViewPro from 'page/Manager/viewPro.jsx';
@@ -46,6 +47,8 @@ const routers = (
         {/* <Route exact path='/manager/view-project' component={ViewPro} /> */}
         {/* <Route exact path='/manager/view-project/:id' component={Detail} /> */}
         <Route exact path='/judges' component={Judge} />
+        <Route exact path='/judges/isApprove' component={IsApprove} />
+        <Route exact path='/judges/detail/:key' component={Detail} />
       </Switch>
     </App>
   </Router>

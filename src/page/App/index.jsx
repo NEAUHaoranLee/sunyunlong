@@ -27,14 +27,14 @@ class App extends PureComponent {
   componentDidMount() {
     // this.props.createUsers({ account: "A00000001", password: "000",userType: 'manager', userName: '李四' })
     //cookie操作
-    // const LoginCookie = Cookies.get('login_ticket');
-    // if (LoginCookie) {
-    //   this.props.getUserInfo(LoginCookie).then((res) => {
-    //     if (res) this.props.history.push('/login');
-    //   });
-    // } else {
-    //   this.props.history.push('/login');
-    // }
+    const LoginCookie = Cookies.get('login_ticket');
+    if (LoginCookie) {
+      this.props.getUserInfo(LoginCookie).then((res) => {
+        if (res) this.props.history.push('/login');
+      });
+    } else {
+      this.props.history.push('/login');
+    }
   }
   toggleNav() {
     this.setState({

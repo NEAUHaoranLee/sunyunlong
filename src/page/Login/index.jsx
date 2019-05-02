@@ -27,7 +27,7 @@ class Login extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="login-container">
-        <div className="login-title">欢迎使用SIPT项目管理系统!</div>
+        <div className="login-title">欢迎使用奖学金评审系统!</div>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
             {getFieldDecorator('account', {
