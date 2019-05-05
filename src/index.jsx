@@ -11,7 +11,8 @@ import Account from 'page/AccountManage/index';
 import App from 'page/App/index';
 import Teacher from 'page/Teacher/index';
 import StudentInfo from 'page/Teacher/studentInfo';
-import Detail from 'page/teacher/Detail';
+import tDetail from 'page/teacher/Detail';
+import sDetail from 'page/Student/Detail';
 import Manager from 'page/Manager/index';
 import Student from 'page/Student/index';
 import Judge from 'page/Judge/index';
@@ -39,16 +40,16 @@ const routers = (
         <Route exact path='/student' component={Student} />
         <Route exact path='/student/apply' component={Apply} />
         <Route exact path='/student/scoreQuery' component={Score} />
-        <Route path='/student/detail/:id' component={Detail} />
+        <Route path='/student/detail/:key' component={sDetail} />
         <Route exact path='/teacher' component={Teacher} />
-        <Route exact path='/teacher/detail/:key' component={Detail} />
+        <Route exact path='/teacher/detail/:key' component={tDetail} />
         <Route exact path='/teacher/student-info' component={StudentInfo} />
         <Route exact path='/manager' component={Manager} />
         {/* <Route exact path='/manager/view-project' component={ViewPro} /> */}
         {/* <Route exact path='/manager/view-project/:id' component={Detail} /> */}
         <Route exact path='/judges' component={Judge} />
         <Route exact path='/judges/isApprove' component={IsApprove} />
-        <Route exact path='/judges/detail/:key' component={Detail} />
+        <Route exact path='/judges/detail/:key' component={tDetail} />
       </Switch>
     </App>
   </Router>

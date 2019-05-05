@@ -57,7 +57,8 @@ class Menager extends PureComponent {
             <div className="isApprove">
               <span>已审批</span>
               <span className="number">
-                {(mRelease.isApprove || []).length}
+                {mRelease.isApprove &&
+                  `${mRelease.isApprove[0].num}/${mRelease.isApprove[0].sum}`}
               </span>
               <a
                 href="javascript:;"
@@ -73,7 +74,8 @@ class Menager extends PureComponent {
             <div className="notApprove">
               <span>未审批</span>
               <span className="number">
-                {(mRelease.notApprove || []).length}
+                {mRelease.notApprove &&
+                  `${mRelease.notApprove[0].num}/${mRelease.notApprove[0].sum}`}
               </span>
               <a
                 href="javascript:;"

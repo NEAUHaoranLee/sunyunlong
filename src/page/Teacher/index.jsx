@@ -22,6 +22,14 @@ class Detail extends PureComponent {
       type: this.state.activeKey,
     });
   }
+  componentWillReceiveProps(newProps) {
+    if (newProps.userAccount !== this.props.userAccount) {
+      this.props.teacherApplyList({
+        account: newProps.userAccount,
+        type: this.state.activeKey,
+      });
+    }
+  }
   showModal = (record, title, name) => {
     this.setState({
       visible: true,
@@ -31,10 +39,12 @@ class Detail extends PureComponent {
     });
   };
   handleOk = (record) => {
-    this.props[this.state.name]({
-      key: this.state.approveKey,
-      reason: this.state.reason,
-    })
+    this.props[this.state.name]([
+      {
+        key: this.state.approveKey,
+        reason: this.state.reason,
+      },
+    ])
       .then(() => {
         this.props.teacherApplyList({
           account: this.props.userAccount,
@@ -60,7 +70,7 @@ class Detail extends PureComponent {
         dataIndex: 'name',
         key: 'name',
         fixed: 'left',
-        width: 250,
+        width: 150,
       },
       {
         title: '学号',
@@ -139,7 +149,7 @@ class Detail extends PureComponent {
     );
   };
   render() {
-    const { applyType, tApplyList } = this.props;
+    const { applyType, tApplyList = [] } = this.props;
 
     return (
       <div className="teacher-container">
@@ -149,6 +159,24 @@ class Detail extends PureComponent {
           })}
         </Tabs>
         <div className="table-container" style={{ width: 1000 }}>
+          <div className="passNum">
+            <span className='content'> {`已审批：${tApplyList.isPass}/${tApplyList.sum}`} </span>
+            <Button
+            size='small'
+              onClick={() => {
+                this.props.teacherNotApprove(
+                  tApplyList.responseDtoList.map((item) => {
+                    return {
+                      key: item.key,
+                      reason: '-',
+                    };
+                  }),
+                );
+              }}
+            >
+              一键驳回
+            </Button>
+          </div>
           <Table
             dataSource={tApplyList.responseDtoList}
             columns={this.getCloumn()}

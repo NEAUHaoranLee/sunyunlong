@@ -26,7 +26,7 @@ class MyPro extends PureComponent {
         className: 'member',
       },
       {
-        title: 'reason',
+        title: '导员评语',
         dataIndex: 'reason',
         key: 'reason',
       },

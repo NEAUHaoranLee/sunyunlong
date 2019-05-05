@@ -81,6 +81,16 @@ class myPro extends PureComponent {
         dataIndex: 'telephoneNumber',
         key: 'telephoneNumber',
       },
+      {
+        title: '第一课堂绩点',
+        dataIndex: 'fGPA',
+        key: 'fGPA',
+      },
+      {
+        title: '第二课堂绩点',
+        dataIndex: 'sGPA',
+        key: 'sGPA',
+      },
       // {
       //   title: '下载文件',
       //   dataIndex: 'download',

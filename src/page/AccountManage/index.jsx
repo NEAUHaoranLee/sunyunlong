@@ -137,7 +137,8 @@ class Account extends PureComponent {
                         .then((res) => {
                           message.success('发送成功');
                         })
-                        .catch(() => {
+                        .catch((err) => {
+                          console.log(err)
                           message.error('发送失败');
                         });
                     }}

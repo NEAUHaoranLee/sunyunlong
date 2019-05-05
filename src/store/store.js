@@ -25,6 +25,7 @@ const initState = {
   sApply: [],
   sScore: [],
   editData: {},
+  sDetail: {},
   //评审
   judgeData: [],
   jIsApproveList: [],
@@ -118,7 +119,7 @@ export const actions = {
     return instance.post('/sendCode', params).then((res) => {
       dispatch(
         actions.updateProps({
-          code:res.res.date
+          code:res.data.date
         })
       )
 
@@ -160,6 +161,17 @@ export const actions = {
       dispatch(
         actions.updateProps({
           sApply: res.data.date,
+        })
+      );
+    })
+  },
+  studentApplyDetail: (params) => (dispatch) => {
+    instance.post('/student/details', params).then((res) => {
+      if (res.data.code !== 200) return;
+
+      dispatch(
+        actions.updateProps({
+          sDetail: res.data.date,
         })
       );
     })
