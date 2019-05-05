@@ -35,7 +35,7 @@ export const navMap = {
             name: '账号管理',
         }
     ],
-    judge: [{
+    judges: [{
         path: '/judges',
         name: '复审管理',
     },

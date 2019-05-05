@@ -39,7 +39,7 @@ const routers = (
         <Route exact path='/student' component={Student} />
         <Route exact path='/student/apply' component={Apply} />
         <Route exact path='/student/scoreQuery' component={Score} />
-        {/* <Route path='/student/edit-project/:id' component={Apply} /> */}
+        <Route path='/student/detail/:id' component={Detail} />
         <Route exact path='/teacher' component={Teacher} />
         <Route exact path='/teacher/detail/:key' component={Detail} />
         <Route exact path='/teacher/student-info' component={StudentInfo} />

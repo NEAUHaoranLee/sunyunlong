@@ -7,6 +7,7 @@ import md5 from 'js-md5';
 import * as p from 'src/pure';
 
 const instance = axios.create({
+  // baseURL: 'http://192.168.43.172:8080/',
   baseURL: 'http://localhost:8080/',
   withCredentials: true,
 });
@@ -61,6 +62,7 @@ export const actions = {
       }
     }) => {
       if (code === 200) {
+        console.log(date)
         dispatch(
           actions.updateProps({
             userType: date.userType,
@@ -101,7 +103,6 @@ export const actions = {
   userSignOut: () => (dispatch) => {
     instance.get('/exit').then(() => {
       // Cookies.erase('login_ticket');
-
       dispatch(
         actions.updateProps({
           userName: '',
@@ -112,6 +113,17 @@ export const actions = {
   },
   changePassword: (params) => (dispatch) => {
     return instance.post('/changePassword', params)
+  },
+  getCode: (params) => (dispatch) => {
+    return instance.post('/sendCode', params).then((res) => {
+      dispatch(
+        actions.updateProps({
+          code:res.res.date
+        })
+      )
+
+      return res;
+    })
   },
   //学生
   getApplyType: () => (dispatch) => {

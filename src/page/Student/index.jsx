@@ -47,7 +47,7 @@ class Student extends PureComponent {
         render: (text, record) => {
           return (
             <div>
-              <Link to={`/student/edit-project/${record.key}`}>查看详情</Link>
+              <Link to={`/student/detail/${record.key}`}>查看详情</Link>
             </div>
           );
         },

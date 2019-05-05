@@ -9,13 +9,21 @@ class Account extends PureComponent {
   constructor(props) {
     super(props);
   }
-
+  componentDidMount() {}
   handleSubmit = _.throttle(
     (e) => {
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
+        console.log('Received values of form: ', values);
         if (!err) {
-          console.log('Received values of form: ', values);
+          if (values.code !== this.props.code) {
+            this.props.form.setFields({
+              code: {
+                value: '',
+                errors: [new Error('验证码错误')],
+              },
+            });
+          }
           if (values.newPassword !== values.againPassword) {
             this.props.form.setFields({
               nPassword: {
@@ -111,6 +119,32 @@ class Account extends PureComponent {
                   <Select.Option value="教师">指导教师</Select.Option>
                   <Select.Option value="管理员">管理员</Select.Option>
                 </Select>,
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('code', {
+                rules: [{ required: true, message: '输入验证码!' }],
+              })(
+                <div className="yanzhengma">
+                  <Input placeholder="输入验证码" />
+                  <Button
+                    onClick={() => {
+                      this.props
+                        .getCode({
+                          account: this.props.userAccount,
+                          role: this.props.userType,
+                        })
+                        .then((res) => {
+                          message.success('发送成功');
+                        })
+                        .catch(() => {
+                          message.error('发送失败');
+                        });
+                    }}
+                  >
+                    发送验证码
+                  </Button>
+                </div>,
               )}
             </Form.Item>
             <Form.Item>
