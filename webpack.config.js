@@ -82,7 +82,7 @@ module.exports = {
     // 具体参考 https://github.com/jantimon/html-webpack-plugin
     new HtmlWebpackPlugin({
       template: '../index.html',
-      title: "SIPT项目管理系统",
+      title: "奖学金评分管理系统",
       // 关闭该插件默认的注入css、js，完全由模版控制
       inject: false,
       filename: 'index.html',

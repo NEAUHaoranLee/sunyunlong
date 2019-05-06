@@ -39,6 +39,7 @@ class Account extends PureComponent {
             let params = {
               ...values,
               account: this.props.userAccount,
+              role: this.props.userType,
             };
 
             delete params.againPassword;
@@ -109,7 +110,7 @@ class Account extends PureComponent {
                 />,
               )}
             </Form.Item>
-            <Form.Item>
+            {/* <Form.Item>
               {getFieldDecorator('role', {
                 rules: [{ required: true, message: '选择角色!' }],
               })(
@@ -120,7 +121,7 @@ class Account extends PureComponent {
                   <Select.Option value="管理员">管理员</Select.Option>
                 </Select>,
               )}
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item>
               {getFieldDecorator('code', {
                 rules: [{ required: true, message: '输入验证码!' }],

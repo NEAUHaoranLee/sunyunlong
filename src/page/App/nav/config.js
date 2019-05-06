@@ -24,7 +24,7 @@ export const navMap = {
     // ],
     teacher: [{
             path: '/teacher',
-            name: '申请管理',
+            name: '初审管理',
         },
         {
             path: '/teacher/student-info',

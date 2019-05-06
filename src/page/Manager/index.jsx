@@ -63,12 +63,12 @@ class Menager extends PureComponent {
               <a
                 href="javascript:;"
                 onClick={() => {
-                  if (mRelease.isApprove.length !== mRelease.sum)
+                  if (mRelease.isApprove[0].num !== mRelease.isApprove[0].sum)
                     return message.warning('审批未完成，无法发布');
                   this.aHandleClick('managerSubmission');
                 }}
               >
-                发布
+                发布公告
               </a>
             </div>
             <div className="notApprove">
@@ -80,12 +80,12 @@ class Menager extends PureComponent {
               <a
                 href="javascript:;"
                 onClick={() => {
-                  if (mRelease.notApprove.length === 0)
+                  if (mRelease.notApprove[0].num === 0)
                     return message.warning('全部已审批');
                   this.aHandleClick('managerRemind');
                 }}
               >
-                提醒
+                提醒审批
               </a>
             </div>
           </div>

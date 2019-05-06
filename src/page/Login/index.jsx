@@ -61,7 +61,7 @@ class Login extends PureComponent {
               <Select>
                 <Select.Option value='学生'>学生</Select.Option>
                 <Select.Option value='评委'>评委</Select.Option>
-                <Select.Option value='教师'>指导教师</Select.Option>
+                <Select.Option value='教师'>辅导员老师</Select.Option>
                 <Select.Option value='管理员'>管理员</Select.Option>
               </Select>
             )}
@@ -74,9 +74,9 @@ class Login extends PureComponent {
             >
               登录
             </Button>
-            <a className="login-form-forgot" href="">
+            {/* <a className="login-form-forgot" href="">
               忘记密码?
-            </a>
+            </a> */}
           </Form.Item>
         </Form>
       </div>

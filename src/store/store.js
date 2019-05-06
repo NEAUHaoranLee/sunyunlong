@@ -80,14 +80,14 @@ export const actions = {
     dispatch(actions.loadingControl(true))
 
     // const params = { account, password: md5(password) }
-    instance.post('/login', params).then(({
+    return instance.post('/login', params).then(({
       data: {
         code,
-        date
+        date,
+        message
       }
     }) => {
       if (code === 200) {
-        dispatch(actions.loadingControl(false))
 
         dispatch(
           actions.updateProps({
@@ -98,7 +98,10 @@ export const actions = {
         )
       } else if (code === 205) {
         message.error(date)
+      } else if (code === 405) {
+        message.error(message);
       }
+      dispatch(actions.loadingControl(false))
     })
   },
   userSignOut: () => (dispatch) => {
@@ -119,7 +122,7 @@ export const actions = {
     return instance.post('/sendCode', params).then((res) => {
       dispatch(
         actions.updateProps({
-          code:res.data.date
+          code: res.data.date
         })
       )
 
@@ -231,7 +234,7 @@ export const actions = {
     })
   },
   judgeNotApprove: (params) => (dispatch) => {
-    instance.post('/judges/notApproval', params).then((res) => {
+    return instance.post('/judges/notApproval', params).then((res) => {
       if (res.data.code !== 200) return;
     })
   },

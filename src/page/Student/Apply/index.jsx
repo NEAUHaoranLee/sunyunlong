@@ -204,7 +204,7 @@ class Project extends PureComponent {
             {getFieldDecorator('email', {
               rules: [{ required: true, message: 'email!' }],
               validateTrigger: false,
-            })(<Input placeholder={'请输入依媚儿'} disabled={disabled} />)}
+            })(<Input placeholder={'请输入email'} disabled={disabled} />)}
           </Form.Item>
           <Form.Item label="第一课堂绩点:" wrapperCol={{ span: 3 }}>
             {getFieldDecorator('fgpa', {

@@ -28,7 +28,7 @@ class App extends PureComponent {
     // this.props.createUsers({ account: "A00000001", password: "000",userType: 'manager', userName: '李四' })
     //cookie操作
     const LoginCookie = Cookies.get('login_ticket');
-    console.log(1111,LoginCookie)
+    console.log(1111, LoginCookie)
     if (LoginCookie) {
       this.props.getUserInfo(LoginCookie).then((res) => {
         if (res) this.props.history.push('/login');
@@ -54,39 +54,41 @@ class App extends PureComponent {
 
     return (
       <div id="app-container">
-        <div className={cls}>
-          {pathname !== '/login' && (
-            <div className="app-header">
-              <div className="img-container">
-                <img src={logo} alt="" />
-              </div>
-              <span className="img-content">东北农业大学奖学金评分系统</span>
-              <div className="header-user-info">
-                {/* <div className="username">
+        <Spin spinning={this.props.loading}>
+          <div className={cls}>
+            {pathname !== '/login' && (
+              <div className="app-header">
+                <div className="img-container">
+                  <img src={logo} alt="" />
+                </div>
+                <span className="img-content">东北农业大学奖学金评分管理系统</span>
+                <div className="header-user-info">
+                  {/* <div className="username">
                   {`孙云龙`}
                 </div> */}
-                <span className="username">{userName}</span>
-                <Link to="/login" onClick={this.props.userSignOut}>
-                  退出
+                  <span className="username">{userName}</span>
+                  <Link to="/login" onClick={this.props.userSignOut}>
+                    退出
                 </Link>
+                </div>
               </div>
-            </div>
-          )}
-          {/* {(pathname.split('/')[1] === userType || pathname === '/login') && ( */}
-          {
-            <div className="page-container">
-              {pathname !== '/login' && (
-                <Nav
-                  pathname={pathname}
-                  toggleNav={this.toggleNav.bind(this)}
-                  isCollapse={isCollapse}
-                  userType={userType}
-                />
-              )}
-              <Spin spinning={this.props.loading}>{this.props.children}</Spin>
-            </div>
-          }
-        </div>
+            )}
+            {/* {(pathname.split('/')[1] === userType || pathname === '/login') && ( */}
+            {
+              <div className="page-container">
+                {pathname !== '/login' && (
+                  <Nav
+                    pathname={pathname}
+                    toggleNav={this.toggleNav.bind(this)}
+                    isCollapse={isCollapse}
+                    userType={userType}
+                  />
+                )}
+                {this.props.children}
+              </div>
+            }
+          </div>
+        </Spin>
       </div>
     );
   }

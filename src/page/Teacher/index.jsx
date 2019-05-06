@@ -160,7 +160,7 @@ class Detail extends PureComponent {
         </Tabs>
         <div className="table-container" style={{ width: 1000 }}>
           <div className="passNum">
-            <span className='content'> {`已审批：${tApplyList.isPass}/${tApplyList.sum}`} </span>
+            <span className='content'> {`审批通过：${tApplyList.isPass}/${tApplyList.sum}`} </span>
             <Button
             size='small'
               onClick={() => {
@@ -171,7 +171,12 @@ class Detail extends PureComponent {
                       reason: '-',
                     };
                   }),
-                );
+                ).then(() => {
+                  this.props.teacherApplyList({
+                    account: this.props.userAccount,
+                    type: this.state.activeKey,
+                  })
+                });
               }}
             >
               一键驳回

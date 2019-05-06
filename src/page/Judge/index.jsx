@@ -65,15 +65,15 @@ class Judge extends PureComponent {
         key: 'reason',
         width: 200,
       },
-      {
-        title: '查看详情',
-        dataIndex: 'detail',
-        key: 'detail',
-        width: 100,
-        render: (text, record) => {
-          return <Link to={`/judges/detail/${record.key}`}>查看详情</Link>;
-        },
-      },
+      // {
+      //   title: '查看详情',
+      //   dataIndex: 'detail',
+      //   key: 'detail',
+      //   width: 100,
+      //   render: (text, record) => {
+      //     return <Link to={`/judges/detail/${record.key}`}>查看详情</Link>;
+      //   },
+      // },
       {
         title: '审批',
         dataIndex: 'approve',
@@ -110,7 +110,7 @@ class Judge extends PureComponent {
         activeKey: key,
       },
       () => {
-        this.props.getManagerRelease({ type: key });
+        this.props.getJudgeData({ type: key });
       },
     );
   };
