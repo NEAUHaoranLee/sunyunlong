@@ -69,7 +69,6 @@ class Detail extends PureComponent {
         title: '姓名',
         dataIndex: 'name',
         key: 'name',
-        fixed: 'left',
         width: 150,
       },
       {
@@ -82,14 +81,19 @@ class Detail extends PureComponent {
         title: '时间',
         dataIndex: 'time',
         key: 'time',
-        width: 200,
-        // filters: collage.map((item) => {
-        //   return {
-        //     text: item,
-        //     value: item,
-        //   };
-        // }),
-        // onFilter: (value, record) => record.collage === value,
+        width: 100,
+      },
+      {
+        title: '第一课堂成绩',
+        dataIndex: 'fGPA',
+        key: 'fGPA',
+        width: 150,
+      },
+      {
+        title: '第二课堂成绩',
+        dataIndex: 'sGPA',
+        key: 'sGPA',
+        width: 150,
       },
       {
         title: '类型',
@@ -100,12 +104,15 @@ class Detail extends PureComponent {
         title: '下载',
         dataIndex:'download',
         key: 'download',
+        fixed: 'right',
+        width: 100,
         render: (text, record) => <a href={`http:///localhost:8080/download?key=${record.key}`}>下载文件</a>
       },
       {
         title: '查看详情',
         dataIndex: 'detail',
         key: 'detail',
+        fixed: 'right',
         width: 100,
         render: (text, record) => {
           return <Link to={`/teacher/detail/${record.key}`}>查看详情</Link>;
@@ -191,7 +198,7 @@ class Detail extends PureComponent {
           <Table
             dataSource={tApplyList.responseDtoList}
             columns={this.getCloumn()}
-            // scroll={{ x: 1200 }}
+            scroll={{ x: 1200 }}
           />
           <Modal
             title={`${this.state.approveTitle}确认`}

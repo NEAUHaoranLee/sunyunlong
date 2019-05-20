@@ -237,7 +237,7 @@ class Project extends PureComponent {
               validateTrigger: false,
             })(<Input placeholder={'请输入联系电话'} disabled={disabled} />)}
           </Form.Item>
-          <Form.Item label="项目简介:">
+          <Form.Item label="简介:">
             {getFieldDecorator('introduce')(
               <Input.TextArea
                 rows={4}
