@@ -13,6 +13,11 @@ class Student extends PureComponent {
   componentDidMount() {
     this.props.getStudentApply({ account: this.props.userAccount });
   }
+  componentWillReceiveProps(newProps) {
+    if (this.props.userAccount !== newProps.userAccount) {
+      this.props.getStudentApply({ account: newProps.userAccount });
+    }
+  }
   getColumn = () => {
     return [
       {
