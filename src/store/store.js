@@ -40,6 +40,13 @@ const TYPE = {
 }
 
 export const actions = {
+  //test
+  upload: (params) => (dispatch) => {
+    return instance.post('/upload', params)
+  },
+  download: (params) => (dispatch) => {
+    return instance.get('/download')
+  },
   updateProps: (payload) => (dispatch) => {
     dispatch({
       type: TYPE.UPDATE_PROPS,

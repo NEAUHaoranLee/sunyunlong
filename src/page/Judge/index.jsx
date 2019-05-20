@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { message, Button, Icon, Divider, Tabs, Table, Modal } from 'antd';
+import { message, Button, Icon, Divider, Tabs, Table, Modal, Input, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'store/store';
@@ -18,7 +18,12 @@ class Judge extends PureComponent {
   }
   componentDidMount() {
     this.props.getApplyType();
-    this.props.getJudgeData({ type: this.state.activeKey });
+    this.props.userAccount && this.props.getJudgeData({ type: this.state.activeKey, account: this.props.userAccount });
+  }
+  componentWillReceiveProps(newProps) {
+    if (this.props.userAccount !== newProps.userAccount) {
+      this.props.getJudgeData({ type: this.state.activeKey, account: newProps.userAccount });
+    }
   }
   getCloumn = () => {
     return [
@@ -60,6 +65,20 @@ class Judge extends PureComponent {
         key: 'type',
       },
       {
+        title: '简介',
+        dataIndex: 'intr',
+        key: 'intr',
+        className: 'intro',
+        // width: 170,
+        render: (text, record) => {
+          return (
+            <Tooltip title={record.introduce}>
+              <span >{record.introduce}</span>
+            </Tooltip>
+          )
+        }
+      },
+      {
         title: '导员评语',
         dataIndex: 'reason',
         key: 'reason',
@@ -75,28 +94,38 @@ class Judge extends PureComponent {
       //   },
       // },
       {
+        title: '下载',
+        dataIndex:'download',
+        key: 'download',
+        render: (text, record) => <a href={`http:///localhost:8080/download?key=${record.key}`}>下载文件</a>,
+        fixed: 'right',
+        width: 100,
+      },
+      {
         title: '审批',
         dataIndex: 'approve',
         key: 'approve',
         fixed: 'right',
-        width: 110,
+        width: 150,
         render: (text, record) => {
           return (
             <div>
-              <a
-                href="javascript:;"
-                onClick={() => this.showModal(record, '审批', 'judgeApprove')}
-              >
-                审批
-              </a>
+              <Input style={{width: 60}} onChange={(e) => {
+                this.setState({
+                  score: {
+                    ...this.state.score,
+                    [record.key]: e.target.value,
+                  }
+                })
+              }}/>
               <Divider type="vertical" />
               <a
                 href="javascript:;"
                 onClick={() =>
-                  this.showModal(record, '驳回', 'judgeNotApprove')
+                  this.showModal(record, '提交', 'judgeNotApprove')
                 }
               >
-                驳回
+                提交
               </a>
             </div>
           );
@@ -110,7 +139,7 @@ class Judge extends PureComponent {
         activeKey: key,
       },
       () => {
-        this.props.getJudgeData({ type: key });
+        this.props.getJudgeData({ type: key, account: this.props.userAccount });
       },
     );
   };
@@ -122,13 +151,14 @@ class Judge extends PureComponent {
       name,
     });
   };
-  handleOk = (record) => {
+  handleOk = () => {
     this.props[this.state.name]({
       key: this.state.approveKey,
-      reason: this.state.reason,
+      account: this.props.userAccount,
+      data: this.state.score[this.state.approveKey],
     })
       .then(() => {
-        this.props.getJudgeData({ type: this.state.activeKey });
+        this.props.getJudgeData({ type: this.state.activeKey, account: this.props.userAccount });
         return true;
       })
       .then(this.hideModal);
@@ -166,7 +196,7 @@ class Judge extends PureComponent {
           <Table
             dataSource={this.props.judgeData}
             columns={this.getCloumn()}
-            scroll={{ x: 1200 }}
+            scroll={{ x: 1400 }}
           />
           <Modal
             title={`${this.state.approveTitle}确认`}

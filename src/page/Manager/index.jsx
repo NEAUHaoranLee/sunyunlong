@@ -37,7 +37,13 @@ class Menager extends PureComponent {
 
     this.props[name]({
       key: mRelease.isApprove[0].key || mRelease.notApprove[0].key,
-    }).then((res) => message.success(res.data.date));
+    }).then((res) => {
+      if (res.data.code === 200) {
+        message.success(res.data.date)
+      }else {
+        message.error(res.data.date)
+      }
+    });
   };
   render() {
     const { mRelease, applyType } = this.props;

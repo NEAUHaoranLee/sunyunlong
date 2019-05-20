@@ -97,6 +97,12 @@ class Detail extends PureComponent {
         key: 'type',
       },
       {
+        title: '下载',
+        dataIndex:'download',
+        key: 'download',
+        render: (text, record) => <a href={`http:///localhost:8080/download?key=${record.key}`}>下载文件</a>
+      },
+      {
         title: '查看详情',
         dataIndex: 'detail',
         key: 'detail',

@@ -240,11 +240,11 @@ class Project extends PureComponent {
               </Upload>,
             )}
           </Form.Item> */}
-          {/* <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button type="primary" htmlType="submit">
-              提交
+          <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+            <Button type="primary">
+              <a href={`http:///localhost:8080/download?key=${this.props.match.params.key}`}>下载文件</a>
             </Button>
-          </Form.Item> */}
+          </Form.Item>
         </Form>
       </div>
     );

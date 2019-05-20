@@ -47,12 +47,15 @@ class Project extends PureComponent {
   }
   formDataFormatter = (value) => {
     let formValue = value || this.props.form.getFieldsValue();
-    let { pathFirst, pathSecond, pathThird } = formValue;
 
     for (const k in formValue) {
       formValue[k] = formValue[k] ? formValue[k] : '';
     }
+    console.log(formValue);
 
+    formValue.fileName = formValue.path[0].response.date.fileName;
+    formValue.path = formValue.path[0].response.date.path;
+    console.log(formValue);
     // formValue.pathFirst = pathFirst
     //   ? `${pathFirst[0].response.data.dir}$*$${pathFirst[0].originFileObj.name}`
     //   : '';
@@ -243,15 +246,15 @@ class Project extends PureComponent {
               />,
             )}
           </Form.Item>
-          {/* <Form.Item label="相关材料">
-            {getFieldDecorator('pathFirst', {
+          <Form.Item label="相关材料">
+            {getFieldDecorator('path', {
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile('first'),
             })(
               <Upload
                 name="file"
-                action="http://localhost:8080/student/update"
-                type=".doc,.docx"
+                action="http://localhost:8080/upload"
+                // type=".doc,.docx"s
               >
                 {this.state.first && (
                   <Button>
@@ -260,7 +263,7 @@ class Project extends PureComponent {
                 )}
               </Upload>,
             )}
-          </Form.Item> */}
+          </Form.Item>
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Button type="primary" htmlType="submit">
               提交
